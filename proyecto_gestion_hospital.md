@@ -2,6 +2,27 @@
     
 **Estructura del documento principal:**
 
+
+- **Capítulo I: Introducción**
+  - Introducción al proyecto y definición del problema a resolver.
+  
+- **Capítulo II: Objetivos**
+  - Objetivo general y objetivos específicos del sistema.
+
+- **Capítulo III: Desarrollo**
+  - Descripción detallada del sistema.
+  - Explicación de las funcionalidades y características técnicas.
+
+- **Capítulo IV: Desarrollo del Tema**
+  - Procedimiento para la implementación del sistema, incluyendo scripts de base de datos.
+
+- **Capítulo V: Conclusiones**
+  - Resultados obtenidos y evaluación del impacto del sistema.
+  
+---
+
+Esta estructura facilita la organización del proyecto y el flujo del trabajo para su implementación.
+
 # PRESENTACIÓN: Sistema de Gestión Hospitalaria
 
 **Asignatura**: Bases de Datos I (FaCENA-UNNE)
