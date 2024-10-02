@@ -64,7 +64,7 @@ En resumen, el sistema facilita la coordinación entre médicos, pacientes y per
 
 
 ### Diagrama relacional
-![diagrama_relacional](https://github.com/dovillegas/basesdatos_proyecto_estudio/blob/main/doc/image_relational.png)
+![diagrama_relacional](https://github.com/ZalazarKaren/basesdatos_proyecto_estudio/blob/master/doc/image_relational.jpeg)
 
 ### Diccionario de datos
 
