@@ -1,24 +1,12 @@
 # Bases de Datos I - Proyecto de Estudio
-Este espacio propone presentar la información para organizar el desarrollo del Proyecto de Estudio de la asignatura Bases de Datos I (FaCENA - UNNE)
 
+## Proyecto de Estudio: Sistema de Gestión Hospitalaria
+Este proyecto está orientado al desarrollo de un **Sistema de Gestión Hospitalaria**, cuyo objetivo es automatizar y controlar el rendimiento de los médicos en un hospital. La implementación del sistema permitirá optimizar los procesos internos, mejorar la calidad del servicio médico y reducir errores en la atención al paciente.
 
-# Proyecto de Estudio!
+### Estructura del documento principal:
 
-Este espacio propone presentar la información para organizar el desarrollo del Proyecto de Estudio de la asignatura Bases de Datos I (FaCENA - UNNE)
+- **Capítulo I: Introducción**
+  - Introducción al proyecto y definición del problema a resolver.
 
-Este borrador fue elaborado usando https://stackedit.io/app#
-
-**Estructura inicial del proyecto en el repositorio**
-
-    proyecto_estudio
-    ->doc (carpeta con documentos e imágenes asociados al contenido principal)
-    ->script (capeta de código del proyecto)
-	---->tema_01 (sub-carpeta específica del tema)
-		  tema01_script01.sql
-		  tema01_script02.sql
-		  tema_nombre.md (descripción completa del procedimiento para implementar el tema técnico de estudio)
-	---->tema_2
-	----> ...
-    ->nombre_proyecto.md (documento principal estructurado por capítulos)
-    
-**Estructura del documento principal:**
+- **Capítulo IV: Desarrollo del Tema**
+  - Procedimiento para la implementación del sistema, incluyendo scripts de base de datos.
