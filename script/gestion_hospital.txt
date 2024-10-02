@@ -1,0 +1,179 @@
+create database gestion_hospital;
+use gestion_hospital;
+
+CREATE TABLE Tipo_Consulta
+(
+  id_tipo INT NOT NULL,
+  descripcion VARCHAR(100) NOT NULL,
+  precio FLOAT NOT NULL,
+  CONSTRAINT PK_Tipo_Consulta PRIMARY KEY (id_tipo)
+);
+
+CREATE TABLE Medicos
+(
+  id_medico INT NOT NULL,
+  nombre_apellido VARCHAR(100) NOT NULL,
+  CONSTRAINT PK_Medicos PRIMARY KEY (id_medico)
+);
+
+CREATE TABLE Provincia
+(
+  id_provincia INT NOT NULL,
+  nombre_provincia VARCHAR(100) NOT NULL,
+  CONSTRAINT PK_Provincia PRIMARY KEY (id_provincia)
+);
+
+CREATE TABLE Entrada
+(
+  id_entrada INT NOT NULL,
+  fecha_entrada DATE NOT NULL,
+  hora VARCHAR(15) NOT NULL,
+  CONSTRAINT PK_Entrada PRIMARY KEY (id_entrada)
+);
+
+CREATE TABLE Salida
+(
+  id_salida INT NOT NULL,
+  fecha_salida DATE NOT NULL,
+  hora VARCHAR(15) NOT NULL,
+  CONSTRAINT PK_Salida PRIMARY KEY (id_salida)
+);
+
+CREATE TABLE Control_Horarios
+(
+  id_control_horarios INT NOT NULL,
+  id_entrada INT NOT NULL,
+  id_salida INT NOT NULL,
+  id_medico INT NOT NULL,
+  CONSTRAINT PK_Control_Horarios PRIMARY KEY (id_control_horarios),
+  CONSTRAINT FK_Control_Horarios_Entrada FOREIGN KEY (id_entrada) REFERENCES Entrada(id_entrada),
+  CONSTRAINT FK_Control_Horarios_Salida FOREIGN KEY (id_salida) REFERENCES Salida(id_salida),
+  CONSTRAINT FK_Control_Horarios_Medicos FOREIGN KEY (id_medico) REFERENCES Medicos(id_medico),
+  --CONSTRAINT CK_Control_Horarios_Fechas CHECK (fecha_salida IS NULL OR fecha_salida >= fecha_ingreso);
+);
+
+CREATE TABLE Localidad
+(
+  id_localidad INT NOT NULL,
+  nombre_localidad VARCHAR(100) NOT NULL,
+  id_provincia INT NOT NULL,
+  CONSTRAINT PK_Localidad PRIMARY KEY (id_localidad),
+  CONSTRAINT FK_Localidad FOREIGN KEY (id_provincia) REFERENCES Provincia(id_provincia)
+);
+
+CREATE TABLE Domicilio
+(
+  id_domicilio INT NOT NULL,
+  calle VARCHAR(100) NOT NULL,
+  numero INT NOT NULL,
+  id_localidad INT NOT NULL,
+  CONSTRAINT PK_Domicilio PRIMARY KEY (id_domicilio),
+  CONSTRAINT FK_Domicilio_Localidad FOREIGN KEY (id_localidad) REFERENCES Localidad(id_localidad)
+);
+
+CREATE TABLE Paciente
+(
+  dni_paciente INT NOT NULL,
+  nombre_apellido VARCHAR(100) NOT NULL,
+  fecha_nac DATE NOT NULL,
+  telefono VARCHAR(20) NOT NULL,
+  id_domicilio INT NOT NULL,
+  CONSTRAINT PK_Paciente PRIMARY KEY (dni_paciente),
+  CONSTRAINT FK_Paciente_Domicilio FOREIGN KEY (id_domicilio) REFERENCES Domicilio(id_domicilio),
+  CONSTRAINT UK_Paciente_Telefono UNIQUE (telefono)
+);
+
+CREATE TABLE Consulta_Medica
+(
+  id_act_medica INT NOT NULL,
+  fecha DATE NOT NULL,
+  hora VARCHAR(15) NOT NULL,
+  dni_paciente INT NOT NULL,
+  id_medico INT NOT NULL,
+  id_tipo INT NOT NULL,
+  CONSTRAINT PK_Consulta_Medica PRIMARY KEY (id_act_medica),
+  CONSTRAINT FK_Consulta_Medica_Paciente FOREIGN KEY (dni_paciente) REFERENCES Paciente(dni_paciente),
+  CONSTRAINT FK_Consulta_Medica_Medicos FOREIGN KEY (id_medico) REFERENCES Medicos(id_medico),
+  CONSTRAINT FK_Consulta_Medica_Tipo FOREIGN KEY (id_tipo) REFERENCES Tipo_Consulta(id_tipo)
+);
+
+CREATE TABLE Informes_Desempeño
+(
+  id_informe INT NOT NULL,
+  calificacion INT NOT NULL,
+  comentario VARCHAR(100) NOT NULL, 
+  id_medico INT NOT NULL,
+  dni_paciente INT,
+  CONSTRAINT PK_Informes_Desempeño PRIMARY KEY (id_informe),
+  CONSTRAINT FK_Informes_Desempeño FOREIGN KEY (id_medico) REFERENCES Medicos(id_medico),
+  CONSTRAINT FK_Informes_Desempeño_Paciente FOREIGN KEY (dni_paciente) REFERENCES Paciente(dni_paciente),
+  CONSTRAINT CK_Informes_Desempeño_Calificacion CHECK (calificacion BETWEEN 1 AND 10) 
+);
+
+/*---------------
+-- LOTE DE DATOS
+----------------*/
+INSERT INTO Tipo_Consulta (id_tipo, descripcion, precio) VALUES
+(1, 'Consulta General', 500.0),
+(2, 'Consulta Especializada', 1000.0);
+
+INSERT INTO Medicos (id_medico, nombre_apellido) VALUES
+(1, 'Dr. Juan Perez'),
+(2, 'Dra. Maria Lopez');
+
+INSERT INTO Provincia (id_provincia, nombre_provincia) VALUES
+(1, 'Buenos Aires'),
+(2, 'Cordoba');
+
+INSERT INTO Localidad (id_localidad, nombre_localidad, id_provincia) VALUES
+(1, 'La Plata', 1),
+(2, 'Cordoba Capital', 2);
+
+INSERT INTO Domicilio (id_domicilio, calle, numero, id_localidad) VALUES
+(1, 'Calle Roca', 123, 1),
+(2, 'Avenida Corrientes', 742, 2);
+
+INSERT INTO Paciente (dni_paciente, nombre_apellido, fecha_nac, telefono, id_domicilio) VALUES
+(12345678, 'Pedro Gomez', '1980-01-01', '123456789', 1),
+(87654321, 'Ana Martinez', '1990-02-02', '987654321', 2);
+
+INSERT INTO Entrada (id_entrada, fecha_entrada, hora) VALUES
+(1, '2024-10-01', '08:00'),
+(2, '2024-10-01', '09:00');
+
+INSERT INTO Salida (id_salida, fecha_salida, hora) VALUES
+(1, '2024-10-01', '10:00'),
+(2, '2024-10-01', '11:00');
+
+INSERT INTO Control_Horarios (id_control_horarios, id_entrada, id_salida, id_medico) VALUES
+(1, 1, 1, 1),
+(2, 2, 2, 2);
+
+INSERT INTO Consulta_Medica (id_act_medica, fecha, hora, dni_paciente, id_medico, id_tipo) VALUES
+(1, '2024-10-01', '08:30', 12345678, 1, 1),
+(2, '2024-10-01', '09:30', 87654321, 2, 2);
+
+INSERT INTO Informes_Desempeño (id_informe, calificacion, comentario, id_medico, dni_paciente) VALUES
+(1, 9, 'Excelente atención', 1, 12345678),
+(2, 8, 'Muy buena atención', 2, 87654321);
+
+SELECT * FROM Tipo_Consulta;
+SELECT * FROM Medicos;
+SELECT * FROM Provincia;
+SELECT * FROM Localidad;
+SELECT * FROM Domicilio;
+SELECT * FROM Paciente;
+SELECT * FROM Entrada;
+SELECT * FROM Salida;
+SELECT * FROM Control_Horarios;
+SELECT * FROM Consulta_Medica;
+SELECT * FROM Informes_Desempeño;
+
+/*----------------------------------
+-- LOTE DE DATOS PARA RESTRICCIONES
+----------------------------------*/
+-- Datos incorrectos en Informes_Desempeño para verificar. Esto debería fallar porque la calificación está fuera del rango permitido.
+INSERT INTO Informes_Desempeño (id_informe, calificacion, comentario, id_medico, dni_paciente) VALUES
+(5, 11, 'Excelente atención', 1, 12345678);
+
+
