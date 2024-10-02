@@ -10,3 +10,5 @@ Este proyecto está orientado al desarrollo de un **Sistema de Gestión Hospital
 
 - **Capítulo IV: Desarrollo del Tema**
   - Procedimiento para la implementación del sistema, incluyendo scripts de base de datos.
+  - 
+Acceso al documento [PDF](doc/Informe-Proyecto-BD2024-G8.pdf) del Informe del Proyecto.
